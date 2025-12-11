@@ -42,9 +42,14 @@
             </div>
 
             <div class = "introText">
-                <h1>Hi, I'm <span>Kurt.</span></h1>
+                <h1>Hi, I'm <span class="bold-name">Kurt.</span></h1>
                 <!-- change this to be interactive -->
-                <h3 class="typingText">I'm a <span id="typing-word"></span></h3>
+                <h3 class="typingText">
+                    I'm a&nbsp;<span class="typing-wrapper">
+                        <span id="typing-word"></span>
+                        <span class="caret"></span>
+                    </span>
+                </h3>
                 <div class = "links">
                     <a href="https://github.com/kriggithub" target="_blank" rel="noopener noreferrer">
                         <i class="fa-brands fa-github"></i>
@@ -68,31 +73,65 @@
      <script>
 document.addEventListener("DOMContentLoaded", function () {
     const words = [
-        { text: "YouTuber", color: "#BF3C3C" },
-        { text: "Biostatistician", color: "#3C80BF" },
-        { text: "Researcher", color: "#47BF3C" }
+        { text: "YouTuber.",        color: "#BF3C3C" },
+        { text: "Biostatistician.", color: "#3C80BF" },
+        { text: "Researcher.",      color: "#47BF3C" }
     ];
 
     const element = document.getElementById("typing-word");
-    let index = 0;
+    const wrapper = document.querySelector(".typing-wrapper");
 
-    function switchWord() {
-        const current = words[index];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
 
-        // Change the word text
-        element.textContent = current.text;
-        // Change the text color
+    const typingDelay  = 150;  /* type speed */
+    const erasingDelay = 90;   /* delete speed */
+    const endPause     = 2500; /* pause after fully typed */
+    const startPause   = 500;  /* pause before next word */
+
+    
+    function typeLoop() {
+        const current = words[wordIndex];
+
+        /* update colors for this word */
         element.style.color = current.color;
-        // Change the cursor color by updating the CSS variable
         document.documentElement.style.setProperty("--cursor-color", current.color);
 
-        index = (index + 1) % words.length;
+        if (!isDeleting) {
+            /* typing phase */
+            if (charIndex <= current.text.length) {
+                element.textContent = current.text.substring(0, charIndex);
+                charIndex++;
+                setTimeout(typeLoop, typingDelay);
+            } else {
+                /* fully typed, pause then start deleting */
+                isDeleting = true;
+                setTimeout(typeLoop, endPause);
+            }
+        } else {
+            /* deleting phase */
+            if (charIndex > 0) {
+                element.textContent = current.text.substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(typeLoop, erasingDelay);
+            } else {
+                /* word fully deleted, keep the line height and width stable */
+                element.textContent = "";
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(typeLoop, startPause);
+            }
+        }
     }
 
-    switchWord();
-    setInterval(switchWord, 5000);
+    typeLoop();
 });
 </script>
+
+
+
+
 
 
 </body>

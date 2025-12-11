@@ -93,6 +93,10 @@ nav .right a:hover {
 }
 
 
+.heroSection .introText .bold-name {
+    font-weight: 600;                  
+}
+
 .heroSection .headshot,
 .heroSection .introText {
     flex: 1;
@@ -119,7 +123,9 @@ nav .right a:hover {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    gap: 8px; /* fixed spacing between h1 and h3 */
 }
+
 
 
 
@@ -138,8 +144,9 @@ nav .right a:hover {
     font-size: clamp(2.6rem, 4vw, 4.5rem);
     font-weight: normal;
     line-height: 1.1;
-    margin-top: 10px;
+    /* no margin here, spacing is controlled by gap */
 }
+
 
 
 
@@ -177,10 +184,6 @@ nav .right a:hover {
 
 
 
-.heroSection .introText .typingText span {
-    position: relative;
-}
-
 /* main typing text styling */
 .heroSection .introText .typingText {
     position: relative;
@@ -188,26 +191,30 @@ nav .right a:hover {
     font-size: clamp(1.8rem, 3vw, 3.5rem);
     font-weight: normal;
     line-height: 1;
-    display: inline-block;
-    white-space: nowrap;   /* ⬅ NEW: prevents wrapping when the word gets long */
+    display: inline-flex;   /* keeps "I'm a" + word + cursor on one line */
+    white-space: nowrap;
 }
 
-
-/* the changing word */
-.heroSection .introText .typingText #typing-word {
+/* wrapper reserves width so layout does not jump */
+.heroSection .introText .typingText .typing-wrapper {
+    display: inline-flex;
+    align-items: flex-start;
     position: relative;
+    min-width: 14ch; /* JS will also adjust this based on longest word */
+}
+
+/* the changing word itself */
+.heroSection .introText .typingText #typing-word {
     display: inline-block;
 }
 
-/* cursor right next to the word */
-.heroSection .introText .typingText #typing-word::after {
-    content: "";
-    position: absolute;
-    left: 100%;
-    top: 0;
+/* actual cursor element */
+.heroSection .introText .typingText .caret {
+    display: inline-block;
     width: 3px;
     height: 1em;
-    margin-left: 2px; /* tiny gap between last letter and cursor */
+    margin-left: 2px;
+    align-self: flex-start;
     background-color: var(--cursor-color, #ff0000);
     animation: cursorBlink 1.2s steps(1) infinite;
 }
@@ -216,6 +223,11 @@ nav .right a:hover {
     0%, 50% { opacity: 1; }
     50.01%, 100% { opacity: 0; }
 }
+
+
+
+
+
 
 
 
@@ -282,6 +294,35 @@ nav .right a:hover {
     .heroSection .introText {
         align-items: center;       /* center the text block */
         text-align: center;        /* center h1/h3 */
+    }
+
+
+
+    /* center the whole line on mobile */
+    .heroSection .introText .typingText {
+        display: block;      /* treat as a normal block of text */
+        width: 100%;
+        text-align: center;  /* center "I'm a" + wrapper */
+    }
+
+    /* wrapper becomes a stable box, no forced min-width */
+    .heroSection .introText .typingText .typing-wrapper {
+        display: inline-block;
+        position: relative;
+        min-width: auto;     /* don't reserve 14ch on mobile */
+    }
+
+    /* caret is absolutely positioned inside wrapper, so it never drops */
+    .heroSection .introText .typingText .caret {
+        position: absolute;
+        left: 100%;
+        margin-left: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 1em;
+        width: 3px;
+        display: block;
+        animation: cursorBlink 1.2s steps(1) infinite;
     }
 
     .heroSection .headshot img {
