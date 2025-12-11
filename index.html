@@ -40,9 +40,9 @@
             </div>
 
             <div class = "introText">
-                <h1>Hi, I'm <span>Kurt</span></h1>
+                <h1>Hi, I'm <span>Kurt.</span></h1>
                 <!-- change this to be interactive -->
-                <h3 class="typingText">I'm a <span></span></h3>
+                <h3 class="typingText">I'm a <span id="typing-word"></span></h3>
                 <div class = "links">
                     <a href="https://github.com/kriggithub" target="_blank" rel="noopener noreferrer">
                         <i class="fa-brands fa-github"></i>
@@ -64,6 +64,35 @@
          
     </main>
 
-     
+     <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const words = [
+        { text: "YouTuber", color: "#ff0000" },
+        { text: "Biostatistician", color: "#00bfff" },
+        { text: "Researcher", color: "#32cd32" }
+    ];
+
+    const element = document.getElementById("typing-word");
+    let index = 0;
+
+    function switchWord() {
+        const current = words[index];
+
+        // Change the word text
+        element.textContent = current.text;
+        // Change the text color
+        element.style.color = current.color;
+        // Change the cursor color by updating the CSS variable
+        document.documentElement.style.setProperty("--cursor-color", current.color);
+
+        index = (index + 1) % words.length;
+    }
+
+    switchWord();
+    setInterval(switchWord, 5000);
+});
+</script>
+
+
 </body>
 </html>
