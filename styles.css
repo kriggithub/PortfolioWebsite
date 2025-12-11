@@ -1,30 +1,33 @@
+    /* Set color variables to keep things consistent */
 :root {
     --text-color: #FFFFFF;
     --background-color: #070707;
     --hover-color: #a8a8a8;
 }
 
+    /* Remove all margins and paddings globally */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
+    /* Make scrolling smooth if navigating down */
 html {
     scroll-behavior: smooth;
 }
 
-
+    /* Set default font and background color */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
 }
 
-
+    /* Remove default link styling */
 a {
     text-decoration: none;
 }
+
 
 
 /* NAVBAR */
@@ -32,29 +35,32 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 100px;
+    padding: 0 5vw;
     height: 200px;
 }
 
 
 nav .left a {
     color: var(--text-color);
-    font-size: 45px;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
     transition: .1s;
 }
 
+
+nav .right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;         
+}
 
 nav .right a {
     color: var(--text-color);
-    font-size: 30px;
-    margin: 0 20px;
+    font-size: clamp(1rem, 1.6vw, 1.8rem);    
+    margin: 0 10px;
     transition: .1s;
 }
 
-nav .left a:hover {
-    color: var(--hover-color);
-}
-
+nav .left a:hover,
 nav .right a:hover {
     color: var(--hover-color);
 }
@@ -80,55 +86,74 @@ nav .right a:hover {
 .heroSection {
     display: flex;
     align-items: center;
-    padding: 0 500px;
-    margin: 25px 0;
-    gap: 40px;
+    justify-content: flex-start;  
+    padding: 0 5vw 40px;
+    margin: 25px auto;
+    gap: 70px;                    
+    max-width: 1200px;
+    transform: translateX(5vw);
 }
 
 
-
+    /* headshot image */
 .heroSection .headshot img {
     border-radius: 15%;
-    width: 700px;
+    width: min(40vw, 350px);
+    height: auto;
+
 }
 
 
 
+.heroSection .introText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
 
 
 
+    /* text area */
 .heroSection .introText h1 {
     color: var(--text-color);
-    font-size: 110px;
+    font-size: clamp(2.6rem, 4vw, 4.5rem);
     font-weight: normal;
+    line-height: 1.1;
+    text-indent: -2px;
 }
 
 
 .heroSection .introText h3 {
     color: var(--text-color);
-    font-size: 80px;
+    font-size: clamp(2.6rem, 4vw, 4.5rem);
     font-weight: normal;
+    line-height: 1.1;
+    margin-top: 10px;
 }
 
 
+
 .heroSection .introText .links {
-    margin-top: 25px;
+    margin-top: 10px;
+    text-indent: -8px;
 }
 
 
 .heroSection .introText .links a {
     color: var(--text-color);
     padding: 5px 10px;
-    font-size: 45px;
+    font-size: clamp(1.5rem, 2.2vw, 2.8rem);
     transition: .1s;
     margin-right: 10px;
 }
 
 
-.heroSection .introText .links a:last-child{
+.heroSection .introText .links a:last-child {
     border: 2px solid var(--text-color);
     border-radius: 20px;
-    font-size: 35px;
+    font-size: clamp(1.1rem, 1.6vw, 1.8rem);
+    padding: 8px 16px;
 }
 
 
@@ -147,24 +172,31 @@ nav .right a:hover {
     position: relative;
 }
 
-
 /* main typing text styling */
 .heroSection .introText .typingText {
     position: relative;
     color: var(--text-color);
-    font-size: 80px;
+    font-size: clamp(1.8rem, 3vw, 3.5rem);
     font-weight: normal;
     line-height: 1;
+    display: inline-block;
 }
 
-/* cursor */
-.heroSection .introText .typingText::after {
+/* the changing word */
+.heroSection .introText .typingText #typing-word {
+    position: relative;
+    display: inline-block;
+}
+
+/* cursor right next to the word */
+.heroSection .introText .typingText #typing-word::after {
     content: "";
     position: absolute;
-    left: calc(100% + 10px);
+    left: 100%;
     top: 0;
     width: 3px;
     height: 1em;
+    margin-left: 2px; /* tiny gap between last letter and cursor */
     background-color: var(--cursor-color, #ff0000);
     animation: cursorBlink 1.2s steps(1) infinite;
 }
@@ -176,23 +208,6 @@ nav .right a:hover {
 
 
 
-@keyframes cursor {
-    to {
-        border-left: 3px solid #ff0000;
-
-    }
-}
-
-
-@keyframes words {
-    0%, 50%{
-        content: "YouTuber";
-    }
-    51%, 100% {
-        content: "Biostatician";
-    }
-
-}
 
 
 
@@ -201,18 +216,79 @@ nav .right a:hover {
 
 
 
-@media (max-width: 1350px) {
-    /* NAVBAR */
+
+
+/* medium screens */
+@media (max-width: 1024px) {
     nav {
-        padding: 0 50px;
+        padding: 0 4vw;
+        height: 100px;
     }
 
-    nav .left a {
-    font-size: 33px;
+    .heroSection {
+        gap: 30px;
+    }
+
+    .heroSection .headshot img {
+        width: min(45vw, 320px);
+    }
+}
+
+
+/* stack hero on small screens */
+@media (max-width: 800px) {
+     nav {
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        height: auto;
+        padding: 10px 4vw 14px;
+    }
+
+    nav .right {
+        justify-content: center;
     }
 
     nav .right a {
-    font-size: 25px;
-    margin: 0 10px;
+        font-size: 0.95rem;
+        margin: 2px 6px;
+    }
+
+    nav .left a {
+        font-size: 1.6rem;
+    }
+    
+    .heroSection {
+        flex-direction: column-reverse;
+        justify-content: center;   /* center the whole section */
+        align-items: center;       /* center the contents */
+        text-align: center;        /* center text globally */
+        padding: 20px 6vw 40px;
+        transform: none;           /* remove desktop offset */
+        gap: 30px;
+    }
+
+    .heroSection .introText {
+        align-items: center;       /* center the text block */
+        text-align: center;        /* center h1/h3 */
+    }
+
+    .heroSection .headshot img {
+        width: 60vw;
+    }
+
+    .heroSection .introText .links {
+        text-indent: 0;   /* stop shifting text left on mobile */
+    }
+
+    .heroSection .introText .links a {
+        margin-right: 6px;
+    }
+
+    .heroSection .introText .links a:last-child {
+        display: inline-block;
+        margin-top: 10px;
+        
     }
 }
+
