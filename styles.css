@@ -1,0 +1,183 @@
+:root {
+    --text-color: #FFFFFF;
+    --background-color: #070707;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+/* NAVBAR */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    height: 200px;
+}
+
+
+nav .left a {
+    color: var(--text-color);
+    font-size: 45px;
+}
+
+
+nav .right a {
+    color: var(--text-color);
+    font-size: 30px;
+    margin: 0 20px;
+}
+
+
+/* SECTION 1: HERO */
+.heroSection {
+    display: flex;
+    align-items: center;
+    padding: 0 500px;
+    margin: 25px 0;
+    gap: 40px;
+}
+
+
+
+.heroSection .headshot img {
+    border-radius: 15%;
+    width: 700px;
+}
+
+
+
+
+
+
+.heroSection .introText h1 {
+    color: var(--text-color);
+    font-size: 110px;
+    font-weight: normal;
+}
+
+
+.heroSection .introText h3 {
+    color: var(--text-color);
+    font-size: 80px;
+    font-weight: normal;
+}
+
+
+.heroSection .introText .links {
+    margin-top: 25px;
+}
+
+
+.heroSection .introText .links a {
+    color: var(--text-color);
+    padding: 5px 10px;
+    font-size: 45px;
+    transition: .1s;
+    margin-right: 10px;
+}
+
+
+.heroSection .introText .links a:last-child{
+    border: 2px solid var(--text-color);
+    border-radius: 20px;
+    font-size: 35px;
+}
+
+
+.heroSection .introText .links a:hover {
+    color: #ff0000;
+}
+
+.heroSection .introText .links a:last-child:hover {
+    color: #ff0000;
+    border: 2px solid #ff0000;
+}
+
+
+
+.heroSection .introText .typingText span {
+    position: relative;
+}
+
+
+.heroSection .introText .typingText span::before {
+    content: "YouTuber";
+    color: #ff0000;
+    animation: words 10s infinite;
+}
+
+
+
+
+.heroSection .introText .typingText span::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    background-color: var(--background-color);
+    border-left: 3px solid var(--background-color);
+    animation: cursor 1.2s infinite;
+}
+
+
+@keyframes cursor {
+    to {
+        border-left: 3px solid #ff0000;
+
+    }
+}
+
+
+@keyframes words {
+    0%, 50%{
+        content: "YouTuber";
+    }
+    51%, 100% {
+        content: "Biostatician";
+    }
+
+}
+
+
+
+
+
+
+
+
+@media (max-width: 1350px) {
+    /* NAVBAR */
+    nav {
+        padding: 0 50px;
+    }
+
+    nav .left a {
+    font-size: 33px;
+    }
+
+    nav .right a {
+    font-size: 25px;
+    margin: 0 10px;
+    }
+}
